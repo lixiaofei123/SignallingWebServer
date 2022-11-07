@@ -188,17 +188,17 @@ if (config.EnableWebserver) {
 }
 
 app.options('/status', cors())
-app.get('/status', cors(),  (req, res) => {
+app.get('/status', cors(), (req, res) => {
 	let clone = new Map(streamers);
 	let freenum = 0;
 	let ips = []
-        for (let streamer0 of clone.values()) {
-                if (streamer0.status === 'free') {
-			freenum ++;
-                }else{
+	for (let streamer0 of clone.values()) {
+		if (streamer0.status === 'free') {
+			freenum++;
+		} else {
 			ips.push(streamer0.ip)
 		}
-        }
+	}
 
 	res.json({
 		count: clone.size,
@@ -357,6 +357,11 @@ console.logColor(logging.Green, `WebSocket listening to Players connections on :
 let players = new Map(); // playerId <-> player, where player is either a web-browser or a native webrtc player
 let nextPlayerId = 100;
 
+function heartbeat() {
+	this.isAlive = true;
+}
+
+
 playerServer.on('connection', function (ws, req) {
 
 	let streamerObj = undefined;
@@ -373,11 +378,13 @@ playerServer.on('connection', function (ws, req) {
 		}
 	}
 
-
 	if (!streamerObj || streamerObj.ws.readyState != 1) {
 		ws.close(1013 /* Try again later */, 'Streamer is not connected');
 		return;
 	}
+
+	ws.isAlive = true;
+	ws.on('pong', heartbeat);
 
 	let streamer = streamerObj.ws
 	let reqId = streamerObj.reqId
@@ -468,6 +475,23 @@ playerServer.on('connection', function (ws, req) {
 	ws.send(JSON.stringify(clientConfig));
 
 	sendPlayersCount();
+});
+
+// 检查异常断掉的连接
+const interval = setInterval(function ping() {
+	playerServer.clients.forEach(function each(ws) {
+		if (ws.isAlive === false){ 
+			console.logColor(logging.Green, `检查到客户端异常退出.....`)
+			return ws.terminate()
+		};
+
+		ws.isAlive = false;
+		ws.ping();
+	});
+}, 3000);
+
+playerServer.on('close', function close() {
+	clearInterval(interval);
 });
 
 function disconnectAllPlayers(reqId, code, reason) {
