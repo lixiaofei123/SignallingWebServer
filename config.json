@@ -1,0 +1,17 @@
+{
+	"UseFrontend": false,
+	"UseHTTPS": false,
+	"UseAuthentication": false,
+	"LogToFile": true,
+	"HomepageFile": "/public/index.html",
+	"AdditionalRoutes": {},
+	"EnableWebserver": true,
+	"UseMatchmaker": false,
+	"MatchmakerAddress": "",
+	"MatchmakerPort": "9999",
+	"PublicIp": "localhost",
+	"HttpPort": 9081,
+	"HttpsPort": 9443,
+	"StreamerPort": 9997,
+	"peerConnectionOptions": "{\"iceServers\":[{\"urls\":[\"stun:82.157.51.91:4478\",\"turn:82.157.51.91:4478\"],\"username\":\"xxxx\",\"credential\":\"xxxxxx\"}]}"
+}

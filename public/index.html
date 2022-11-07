@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link type="text/css" rel="stylesheet" href="/css/player.css"><script src="/config.js"></script><script src="/script/adapter-latest.js"></script><script src="/script/webRtcPlayer.js"></script><script src="/script/app.js"></script><title>这里是标题....</title><style>body {
+      padding: 0px;
+      margin: 0px;
+      background-size: cover;
+      user-select:none;
+    }
+
+    #playerUI {
+      padding: 0px;
+      margin: 0px;
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      z-index: 1;
+    }
+
+    #app {
+      position: absolute;
+      z-index: 2;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
+
+    ul,li{
+      padding: 0px;
+      margin: 0px;
+      list-style: none;
+    }</style><link href="/css/app.c18a0ba2.css" rel="preload" as="style"><link href="/js/app.2effe5de.js" rel="preload" as="script"><link href="/js/chunk-vendors.5531c410.js" rel="preload" as="script"><link href="/css/app.c18a0ba2.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but sanyi doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="playerUI"><div id="player"></div><div style="display:none"><div id="qualityStatus" class="greyStatus">&#9679</div><div id="overlayButton">+</div></div><div style="display:none" id="overlaySettings"><div id="KickOthers"><div class="settings-text">Kick all other players</div><label class="btn-overlay"><input type="button" id="kick-other-players-button" class="overlay-button btn-flat" value="Kick"></label></div><div id="FillWindow"><div class="settings-text">Enlarge Display to Fill Window</div><label class="tgl-switch"></label></div><div id="QualityControlOwnership"><div class="settings-text">Quality control ownership</div><label class="tgl-switch"><input type="checkbox" id="quality-control-ownership-tgl" class="tgl tgl-flat"><div class="tgl-slider"></div></label></div><div id="EncoderSettings"><div class="settings-text">Encoder Settings</div><div id="encoderParamsContainer" class="collapse"><div class="form-group"><label for="encoder-rate-control" class="settings-text">Rate Control</label> <select id="encoder-rate-control"><option value="CBR" selected>CBR</option><option value="VBR">VBR</option><option value="ConstQP">ConstQP</option></select><br><label for="encoder-target-bitrate-text">Target Bitrate (kbps)</label> <input type="number" class="form-control" id="encoder-target-bitrate-text" value="0" min="0" max="100000"><br><label for="encoder-max-bitrate-text">Max Bitrate (kbps)</label> <input type="number" class="form-control" id="encoder-max-bitrate-text" value="0" min="0" max="100000"><br><label for="encoder-min-qp-text">Min QP</label> <input type="number" class="form-control" id="encoder-min-qp-text" value="0" min="0" max="999"><br><label for="encoder-max-qp-text">Max QP</label> <input type="number" class="form-control" id="encoder-max-qp-text" value="0" min="0" max="999"><br><div class="settings-text">Filler Data</div><label class="tgl-switch"><input type="checkbox" id="encoder-filler-data-tgl" class="tgl tgl-flat"><div class="tgl-slider"></div></label><br><label for="encoder-multipass" class="settings-text">Multipass</label> <select id="encoder-multipass"><option value="DISABLED" selected>DISABLED</option><option value="QUARTER">QUARTER</option><option value="FULL">FULL</option></select><br><input id="encoder-params-submit" class="btn btn-primary btn-lg mt-3" type="button" value="Apply"></div></div></div><div id="WebRTCSettings"><div class="settings-text">WebRTC Settings</div><div id="webrtcParamsContainer" class="collapse"><div class="form-group"><label for="webrtc-degradation-pref">Degradation Pref</label> <select id="webrtc-degradation-pref"><option value="BALANCED">BALANCED</option><option value="MAINTAIN_FRAMERATE">MAINTAIN_FRAMERATE</option><option value="MAINTAIN_RESOLUTION">MAINTAIN_RESOLUTION</option></select><br><label for="webrtc-max-fps-text">Max FPS</label> <input type="number" class="form-control" id="webrtc-max-fps-text" value="1" min="1" max="999"><br><label for="webrtc-min-bitrate-text">Min Bitrate (kbps)</label> <input type="number" class="form-control" id="webrtc-min-bitrate-text" value="0" min="0" max="100000"><br><label for="webrtc-max-bitrate-text">Max Bitrate (kbps)</label> <input type="number" class="form-control" id="webrtc-max-bitrate-text" value="0" min="0" max="100000"><br><label for="webrtc-low-qp-text">Low QP Threshold</label> <input type="number" class="form-control" id="webrtc-low-qp-text" value="0" min="0" max="999"><br><label for="webrtc-high-qp-text">High QP Threshold</label> <input type="number" class="form-control" id="webrtc-high-qp-text" value="0" min="0" max="999"><br><input id="webrtc-params-submit" class="btn btn-primary btn-lg mt-3" type="button" value="Apply"></div></div></div><div id="ShowFPS"><div class="settings-text">Show FPS</div><label class="btn-overlay"><input type="button" id="show-fps-button" class="overlay-button btn-flat" value="Toggle"></label></div><div id="MatchViewportResolution"><div class="settings-text">Match Viewport Resolution</div><label class="tgl-switch"><input type="checkbox" id="match-viewport-res-tgl" class="tgl tgl-flat"><div class="tgl-slider"></div></label></div><div id="Stats"><div class="settings-text">Show Stats</div><label class="tgl-switch"><input type="checkbox" id="show-stats-tgl" class="tgl tgl-flat" checked><div class="tgl-slider"></div></label><div id="statsContainer" class="statsContainer"><div id="stats" class="stats"></div></div></div><div id="LatencyTest"><button onclick="sendStartLatencyTest()">Test Latency</button><div id="LatencyStatsContainer" class="statsContainer"><div id="LatencyStats" class="stats">No stats yet...</div></div></div></div></div><div id="app"></div><script>window.addEventListener("load", () => {
+      load() //webrtc
+    })</script><script src="/js/chunk-vendors.5531c410.js"></script><script src="/js/app.2effe5de.js"></script></body></html>
